@@ -3,11 +3,56 @@ body {
   background-color: #7E8F7C;
 }
 
-#title {
+.header {
+  border-style: solid;
+  border-width: 1px;
+}
+
+#player {
+  position: relative;
+  top: 0px;
+  left: 0px;
+  width: 50%;
+  height: 71px;
+  padding-top: 20px;
+}
+
+#score {
+  position: relative;
+  top: -71px;
+  left: 50%;
+  width: 50%;
+}
+
+#score30 {
+  position: relative;
+  top: -72px;
+  width: 25%;
+  left: 50%;
+}
+
+#scoreTot {
+  position: relative;
+  top: -108px;
+  left: 75%;
+  width: 25%;
+}
+
+#header {
+  border-style: solid;
+  border-width: 0px;
+  height: 71px;
   margin: 20px;
+  background-color: #C63D0F;
+  color: #FDF3E7;
+  margin: 30px 30px 5px 30px;
+}
+
+#title {
+  margin: 30px;
   color: #FDF3E7;
 }
 
 #stuff {
-  margin: 20px;
+  margin: 0px 30px 10px 30px;
 }
