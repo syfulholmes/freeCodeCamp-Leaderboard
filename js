@@ -71,12 +71,6 @@ class Leaderboard extends React.Component {
   constructor(props){
     super(props);
     this.state = { array: [] };
-    this.updateState = this.updateState.bind(this);
-    //this.componentWillMount = this.componentWillMount.bind(this);
-  }
-  
-  updateState(e){
-    this.setState({ array: e });
   }
   
   componentWillMount(){
@@ -116,5 +110,4 @@ class Leaderboard extends React.Component {
   }
 }
 
-//var test = [<PlayerEntry rank='1' name='Apul' img='https://avatars2.githubusercontent.com/u/24684319?v=3' recentScore='100' allScore='1000' />, <PlayerEntry rank='1' name='Apul' img='https://avatars2.githubusercontent.com/u/24684319?v=3' recentScore='100' allScore='1000' />];
 ReactDOM.render(<Leaderboard />, document.getElementById('stuff'));
