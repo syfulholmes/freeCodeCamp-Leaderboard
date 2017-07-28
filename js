@@ -84,27 +84,30 @@ class Leaderboard extends React.Component {
       url: 'https://fcctop100.herokuapp.com/api/fccusers/top/recent',
       datatype: 'json',
       success: function(json) {
-        var rk;
-        var username;
-        var ig;
-        var rScore;
-        var aScore;
+        
         var outArr = [];
         
         for (var i = 0; i < 30; i++){
+          //json per player
           var playerData = json[i];
           
-          rk = i+1;
-          username = playerData.username;
-          ig = playerData.img;
-          rScore = playerData.recent;
-          aScore = playerData.alltime;
+          //relevant data per player
+          var rk = i+1;
+          var username = playerData.username;
+          var ig = playerData.img;
+          var rScore = playerData.recent;
+          var aScore = playerData.alltime;
           
+          //contruct jsx for each player
           var playerEntry = <PlayerEntry rank={rk} name={username} img={ig} recentScore={rScore} allScore={aScore} />;
+          
+          //add to array
           outArr.push(playerEntry);
         }
+        
+        //modify state after generating JSX array
         this.setState({ array: outArr });
-      }.bind(this)
+      }.bind(this) //must bind to ensure this is properly referenced
     });
   }
   
