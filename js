@@ -1,3 +1,4 @@
+//stylistic stuff
 const playerEntryStyles = {
   borderStyle: 'solid',
   borderWidth: 1,
@@ -8,6 +9,7 @@ const playerEntryStyles = {
 };
 
 const nameStyle = {
+  color: '#FDF3E7',
   position: 'relative',
   textAlign: 'left',
   width: '25%',
@@ -25,6 +27,7 @@ const imgStyle = {
 };
 
 const scoreStyle1 = {
+  color: '#FDF3E7',
   position: 'relative',
   top: -96,
   textAlign: 'center',
@@ -35,6 +38,7 @@ const scoreStyle1 = {
 };
 
 const scoreStyle2 = {
+  color: '#FDF3E7',
   position: 'relative',
   top: -130,
   textAlign: 'center',
@@ -45,12 +49,20 @@ const scoreStyle2 = {
 };
 
 const rankStyle = {
+  color: '#FDF3E7',
   position: 'relative',
   textAlign: 'left',
-  top: -160,
-  left: 10
+  top: -162,
+  left: 20
 };
 
+//stores raw json data
+var playerJsonArray;
+
+//stores default display JSX
+var defaultJSX;
+
+//Generates player entry JSX
 const PlayerEntry = (props) => {
   var playerRank = props.rank;
   var playerName = props.name;
@@ -67,6 +79,57 @@ const PlayerEntry = (props) => {
     </div>);
 }
 
+//outputs sorted json array by total score
+function sortByTotal(inputArr) {
+  var tempArr = inputArr;
+  
+  tempArr.sort(function(a, b){
+    if (a.alltime > b.alltime) {return -1;}
+    else if (a.alltime < b.alltime) {return 1;}
+    else {return 0;}
+  });
+  
+  return tempArr;
+}
+
+//input json array, outputs jsx array
+function listJSX(inputArr) {
+  var outArr = [];
+  for (var i = 0; i < 30; i++){
+    //json per player
+    var playerData = inputArr[i];
+          
+    //relevant data per player
+    var rk = i+1;
+    var username = playerData.username;
+    var ig = playerData.img;
+    var rScore = playerData.recent;
+    var aScore = playerData.alltime;
+          
+    //contruct jsx for each player
+    var playerEntry = <PlayerEntry rank={rk} name={username} img={ig} recentScore={rScore} allScore={aScore} />;
+    
+    //add to array
+    outArr.push(playerEntry);    
+    }
+  return outArr;
+}
+
+//handler function (total)
+function handleSortByTotal(){
+  var tempArr = sortByTotal(playerJsonArray);
+  var outJSX = <div>{listJSX(tempArr)}</div>;
+  
+  ReactDOM.render(outJSX, document.getElementById('stuff'));
+}
+
+//handler function (30 days)
+function handleSortBy30(){
+  var outJSX = <div>{defaultJSX}</div>;
+  ReactDOM.render(outJSX, document.getElementById('stuff'));
+}
+
+//generates leaderboard
 class Leaderboard extends React.Component {
   constructor(props){
     super(props);
@@ -78,35 +141,15 @@ class Leaderboard extends React.Component {
       url: 'https://fcctop100.herokuapp.com/api/fccusers/top/recent',
       datatype: 'json',
       success: function(json) {
-        
-        var outArr = [];
-        
-        for (var i = 0; i < 30; i++){
-          //json per player
-          var playerData = json[i];
-          
-          //relevant data per player
-          var rk = i+1;
-          var username = playerData.username;
-          var ig = playerData.img;
-          var rScore = playerData.recent;
-          var aScore = playerData.alltime;
-          
-          //contruct jsx for each player
-          var playerEntry = <PlayerEntry rank={rk} name={username} img={ig} recentScore={rScore} allScore={aScore} />;
-          
-          //add to array
-          outArr.push(playerEntry);
-        }
-        
-        //modify state after generating JSX array
-        this.setState({ array: outArr });
+        playerJsonArray = json;
+        defaultJSX = listJSX(json);
+        this.setState({ array: [] }); //this line has to be here for it to work?
       }.bind(this) //must bind to ensure this is properly referenced
     });
   }
   
   render() {
-    return <div>{this.state.array}</div>;
+    return <div>{defaultJSX}</div>;
   }
 }
 
