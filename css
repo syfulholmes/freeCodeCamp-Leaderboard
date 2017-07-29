@@ -38,13 +38,21 @@ body {
   width: 25%;
 }
 
+.clickable:hover {
+  background-color: pink;
+  cursor: pointer;
+}
+
+.clickable:active {
+  background-color: white;
+}
+
 #header {
   border-style: solid;
   border-width: 0px;
   height: 71px;
   margin: 20px;
   background-color: #C63D0F;
-  color: #FDF3E7;
   margin: 30px 30px 5px 30px;
 }
 
